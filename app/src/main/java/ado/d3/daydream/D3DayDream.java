@@ -7,10 +7,17 @@ import android.util.Log;
 import android.media.MediaPlayer;
 import android.content.Intent;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import android.view.WindowManager;
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
+import android.app.Activity;
 
 /**
  * Created by john on 5/23/16.
@@ -19,7 +26,15 @@ import java.util.List;
 public class D3DayDream extends DreamService {
 
     private VideoView videoHolder;
-    private final List blockedKeys = new ArrayList(Arrays.asList(KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP, KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_HOME, KeyEvent.KEYCODE_POWER));
+    @SuppressWarnings("unchecked") private final List blockedKeys = new ArrayList(
+            Arrays.asList(
+                    KeyEvent.KEYCODE_VOLUME_DOWN,
+                    KeyEvent.KEYCODE_VOLUME_UP,
+                    KeyEvent.KEYCODE_BACK,
+                    KeyEvent.KEYCODE_HOME,
+                    KeyEvent.KEYCODE_POWER
+            )
+    );
     private Button hiddenExitButton;
 
     @Override
@@ -33,13 +48,22 @@ public class D3DayDream extends DreamService {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        Log.v("D3DayDreamLog", "touchPressed");
+        return true;//consume
+    }
+
+    @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         Log.v("D3DayDreamLog", "keyPressed");
-        if (blockedKeys.contains(event.getKeyCode())) {
-            return true;
-        } else {
-            return super.dispatchKeyEvent(event);
-        }
+        // any key
+        return true;
+        // controlled keys
+//        if (blockedKeys.contains(event.getKeyCode())) {
+//            return true;
+//        } else {
+//            return super.dispatchKeyEvent(event);
+//        }
     }
 
     @Override
@@ -71,11 +95,13 @@ public class D3DayDream extends DreamService {
         videoHolder.setVideoURI(uri);
         videoHolder.requestFocus();
         videoHolder.start();
-
+        //loop the video
         videoHolder.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
-                videoHolder.start(); //need to make transition seamless.
+                videoHolder.start();
             }
         });
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }
