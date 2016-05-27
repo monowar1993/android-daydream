@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ado.d3.daydream">
+    <uses-permission android:name="android.permission.REAL_GET_TASKS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
