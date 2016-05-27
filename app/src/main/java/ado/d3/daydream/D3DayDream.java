@@ -64,6 +64,9 @@ public class D3DayDream extends DreamService {
 //        } else {
 //            return super.dispatchKeyEvent(event);
 //        }
+
+        // Close the app?
+//        System.exit(0);
     }
 
     @Override
