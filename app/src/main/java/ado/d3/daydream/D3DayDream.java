@@ -28,11 +28,11 @@ public class D3DayDream extends DreamService {
     private VideoView videoHolder;
     @SuppressWarnings("unchecked") private final List blockedKeys = new ArrayList(
             Arrays.asList(
-                    KeyEvent.KEYCODE_VOLUME_DOWN,
-                    KeyEvent.KEYCODE_VOLUME_UP,
-                    KeyEvent.KEYCODE_BACK,
-                    KeyEvent.KEYCODE_HOME,
-                    KeyEvent.KEYCODE_POWER
+//                    KeyEvent.KEYCODE_VOLUME_DOWN,
+//                    KeyEvent.KEYCODE_VOLUME_UP,
+//                    KeyEvent.KEYCODE_BACK,
+//                    KeyEvent.KEYCODE_HOME,
+//                    KeyEvent.KEYCODE_POWER
             )
     );
     private Button hiddenExitButton;
@@ -57,13 +57,13 @@ public class D3DayDream extends DreamService {
     public boolean dispatchKeyEvent(KeyEvent event) {
         Log.v("D3DayDreamLog", "keyPressed");
         // any key
-        return true;
+        //return true;
         // controlled keys
-//        if (blockedKeys.contains(event.getKeyCode())) {
-//            return true;
-//        } else {
-//            return super.dispatchKeyEvent(event);
-//        }
+        if (blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
 
         // Close the app?
 //        System.exit(0);
@@ -90,7 +90,7 @@ public class D3DayDream extends DreamService {
 
         setFullscreen(true);
 
-        String uriPath = "android.resource://"+getPackageName()+"/"+R.raw.video;
+        String uriPath = "android.resource://"+getPackageName()+"/"+R.raw.google_photos;
         Uri uri = Uri.parse(uriPath);
 
         videoHolder = (VideoView)findViewById(R.id.VideoView);
